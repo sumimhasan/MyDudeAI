@@ -1,0 +1,14 @@
+{
+    "name ": "",
+    "age": "",
+    "gender": "",
+    "description": "",
+    "userRelation":"",
+    "likes": [],
+    "dislikes": [],
+    "birthday": "2022-01-01",
+    "core traits" : "",
+    "personality": "",
+    "hobbies": [""],
+    "additionalContext": [""] 
+}
