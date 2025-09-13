@@ -130,5 +130,196 @@ def chat():
     response = generate_message(user_message, chat_history, tokenizer, model, device=device)
     return jsonify({"reply": response})
 
+@app.route("/chatpage", methods=["GET"])
+def chat_page():
+    return """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MyDudeAI Chat</title>
+<style>
+  * { box-sizing: border-box; margin:0; padding:0; font-family: 'Segoe UI', sans-serif;}
+  body, html { height:100%; width:100%; }
+
+  body {
+    background: #ece5dd;
+    display: flex;
+  }
+
+.chat-app {
+    position: fixed;  /* Fixes it relative to the viewport */
+    top: 0;           /* Aligns to the top */
+    right: 0;         /* Aligns to the right */
+    height: 100vh;
+    width: 100%;
+    border: 1px solid #000000;
+    background: #f3f3f3;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;    /* Ensures it stays above other content */
+}
+
+  /* Header */
+  .chat-header {
+    height: 60px;
+    background: #075e54;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  }
+
+  /* Messages area */
+  .chat-messages {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: #d3d1ce;
+  }
+
+  .chat-messages::-webkit-scrollbar {
+    width: 6px;
+  }
+  .chat-messages::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.2);
+    border-radius: 3px;
+  }
+
+  /* Message bubbles */
+  .message {
+    max-width: 70%;
+    padding: 10px 15px;
+    border-radius: 20px;
+    position: relative;
+    word-wrap: break-word;
+  }
+
+  .user-msg {
+    align-self: flex-end;
+    background: #dcf8c6;
+    border-bottom-right-radius: 0;
+  }
+
+  .bot-msg {
+    align-self: flex-start;
+    background: #fff;
+    border-bottom-left-radius: 0;
+  }
+
+  /* Input area */
+  .chat-input {
+    display: flex;
+    padding: 10px;
+    background: #f0f0f0;
+    border-top: 1px solid #ddd;
+  }
+
+  .chat-input input {
+    flex: 1;
+    border-radius: 20px;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+  }
+
+  .chat-input button {
+    margin-left: 10px;
+    padding: 0 20px;
+    background: #075e54;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  .chat-input button:hover {
+    background: #128c7e;
+  }
+
+  /* Typing indicator */
+  .typing {
+    align-self: flex-start;
+    font-size: 14px;
+    color: #555;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+
+<div class="chat-app">
+  <div class="chat-header">ChatBot</div>
+  <div class="chat-messages" id="chatMessages"></div>
+  <div class="chat-input">
+    <input type="text" id="userInput" placeholder="Type a message..."/>
+    <button onclick="sendMessage()">Send</button>
+  </div>
+</div>
+
+<script>
+  const chatMessages = document.getElementById('chatMessages');
+  const userInput = document.getElementById('userInput');
+
+  function appendMessage(text, className) {
+    const msgDiv = document.createElement('div');
+    msgDiv.className = 'message ' + className;
+    msgDiv.textContent = text;
+    chatMessages.appendChild(msgDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  function botReply(message) {
+    let reply = "";
+
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'typing';
+    typingDiv.textContent = 'Typing...';
+    chatMessages.appendChild(typingDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+
+    fetch('http://localhost:5000/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message })
+    })
+    .then(response => response.json())
+    .then(data => {
+      chatMessages.removeChild(typingDiv);
+      reply = data.reply || "Sorry, I didn't get that.";
+      appendMessage(reply, 'bot-msg');
+    })
+    .catch(() => {
+      chatMessages.removeChild(typingDiv);
+      appendMessage("Error: Unable to reach the server.", 'bot-msg');
+    });
+   
+  }
+
+  function sendMessage() {
+    const message = userInput.value.trim();
+    if (!message) return;
+    appendMessage(message, 'user-msg');
+    userInput.value = '';
+    botReply(message);
+  }
+
+  userInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') sendMessage();
+  });
+</script>
+
+</body>
+</html>"""
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
