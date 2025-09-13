@@ -143,7 +143,7 @@
   }
 
   function botReply(message) {
-    let reply = "Sorry, I didn't understand that 😅";
+    let reply = "";
 
     const typingDiv = document.createElement('div');
     typingDiv.className = 'typing';
@@ -151,10 +151,23 @@
     chatMessages.appendChild(typingDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
 
-    setTimeout(() => {
-      typingDiv.remove();
+
+    fetch('http://localhost:3000/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message })
+    })
+    .then(response => response.json())
+    .then(data => {
+      chatMessages.removeChild(typingDiv);
+      reply = data.reply || "Sorry, I didn't get that.";
       appendMessage(reply, 'bot-msg');
-    }, 1000 + Math.random()*1000);
+    })
+    .catch(() => {
+      chatMessages.removeChild(typingDiv);
+      appendMessage("Error: Unable to reach the server.", 'bot-msg');
+    });
+   
   }
 
   function sendMessage() {
