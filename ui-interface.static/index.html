@@ -152,7 +152,7 @@
     chatMessages.scrollTop = chatMessages.scrollHeight;
 
 
-    fetch('http://localhost:3000/chat', {
+    fetch('http://localhost:5000/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ message })
