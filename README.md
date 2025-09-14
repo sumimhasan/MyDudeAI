@@ -25,14 +25,12 @@ cd MyDudeAI
 
 ### 2. Install dependencies
 ```bash
-npm install
-# or
-yarn install
+
 ```
 
 ### 3. Run locally
 ```bash
-npm run dev
+python3 chatru
 ```
 
 The service will start on [http://localhost:3000](http://localhost:3000).  
@@ -72,10 +70,9 @@ web ui -request POST http://localhost:3000/chat \
 ---
 
 ## 🛠 Tech Stack
-- Node.js / Express (or NestJS if you use it)  
-- WebSocket + REST API  
-- Local AI model (e.g., FinesteinLM / other)  
-- SQLite (default memory DB, pluggable to others)  
+- Python, Flask , transformers 
+- REST API  
+- Local AI model (e.g., QWEN / other)  
 
 ---
 
@@ -85,10 +82,9 @@ Feel free to fork the repo and submit a pull request.
 
 ---
 
-## 📜 License
-[MIT](./LICENSE)  
 
 ---
 
 ### 🌟 Support
 If you like the project, please **star this repo** ⭐ and share with others!
+
