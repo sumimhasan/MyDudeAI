@@ -30,11 +30,12 @@ python3 setup.py or python setup.py (in windows)
 
 ### 3. Run locally
 ```bash
+edit the bot configs to make your bot 
 python3 botmaker.py
-python3 chat.py
+python3 chatrun.py
 ```
 
-The service will start on [http://localhost:3000](http://localhost:3000).  
+The service will start on [http://localhost:5000](http://localhost:5000).  
 
 ---
 
@@ -55,7 +56,7 @@ MODEL=finestein-4b
 Example request to send a message to your AI companion:
 
 ```bash
-web ui -request POST http://localhost:3000/chat \
+web ui -request POST http://localhost:5000/chat \
      -H "Content-Type: application/json" \
      -d '{"user": "Hey!", "companionId": "mylocalbot"}'
 ```
@@ -88,5 +89,6 @@ Feel free to fork the repo and submit a pull request.
 
 ### 🌟 Support
 If you like the project, please **star this repo** ⭐ and share with others!
+
 
 
