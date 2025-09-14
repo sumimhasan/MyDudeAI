@@ -39,15 +39,6 @@ The service will start on [http://localhost:5000](http://localhost:5000).
 
 ---
 
-## ⚙️ Configuration
-
-You can configure MyDudeAI via `.env` or config files.  
-Example:
-```env
-PORT=3000
-DB_PATH=./data/memory.db
-MODEL=finestein-4b
-```
 
 ---
 
@@ -89,6 +80,7 @@ Feel free to fork the repo and submit a pull request.
 
 ### 🌟 Support
 If you like the project, please **star this repo** ⭐ and share with others!
+
 
 
 
