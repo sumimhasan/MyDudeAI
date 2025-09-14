@@ -1,4 +1,4 @@
-# 🤖 MyDudeAI
+#  MyDudeAI
 
 **MyDudeAI** is a **self-hosted AI companion maker** that lets you create, customize, and run your own AI companions locally.  
 No cloud lock-in, no external dependencies — you’re in full control.  
@@ -19,18 +19,19 @@ No cloud lock-in, no external dependencies — you’re in full control.
 
 ### 1. Clone the repo
 ```bash
-git clone https://github.com/YOUR_USERNAME/MyDudeAI.git
+git clone https://github.com/sumimhasan/MyDudeAI.git
 cd MyDudeAI
 ```
 
 ### 2. Install dependencies
 ```bash
-
+python3 setup.py or python setup.py (in windows)
 ```
 
 ### 3. Run locally
 ```bash
-python3 chatru
+python3 botmaker.py
+python3 chat.py
 ```
 
 The service will start on [http://localhost:3000](http://localhost:3000).  
@@ -87,4 +88,5 @@ Feel free to fork the repo and submit a pull request.
 
 ### 🌟 Support
 If you like the project, please **star this repo** ⭐ and share with others!
+
 
